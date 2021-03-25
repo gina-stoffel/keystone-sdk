@@ -47,9 +47,11 @@ KeystoneDevice::finalize(
   encl.runtime_paddr = runtimePhysAddr;
   encl.user_paddr    = eappPhysAddr;
   encl.free_paddr    = freePhysAddr;
-  // encl.instr_per_epoch = 600000;
-  // encl.cycles_per_epoch = 600000;
+  encl.instr_per_epoch = 700000;
+  encl.cycles_per_epoch = 700000;
   encl.params        = params;
+
+  printf("In KeystoneDevice.cpp: KeystoneDevice::finalize");
 
   if (ioctl(fd, KEYSTONE_IOC_FINALIZE_ENCLAVE, &encl)) {
     perror("ioctl error");

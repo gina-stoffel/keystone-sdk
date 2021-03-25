@@ -272,6 +272,8 @@ Enclave::init(
     uintptr_t alternatePhysAddr) {
   params = _params;
 
+  printf("In enclave.cpp: Enclave::init");
+
   if (params.isSimulated()) {
     pMemory = new SimulatedEnclaveMemory();
     pDevice = new MockKeystoneDevice();
