@@ -41,15 +41,14 @@ KeystoneDevice::initUTM(size_t size) {
 Error
 KeystoneDevice::finalize(
     uintptr_t runtimePhysAddr, uintptr_t eappPhysAddr, uintptr_t freePhysAddr,
-    struct runtime_params_t params) {
+    struct runtime_params_t params, uint64_t cyclesPerEpoch) {
   struct keystone_ioctl_create_enclave encl;
-  encl.eid           = eid;
-  encl.runtime_paddr = runtimePhysAddr;
-  encl.user_paddr    = eappPhysAddr;
-  encl.free_paddr    = freePhysAddr;
-  encl.instr_per_epoch = 700000;
-  encl.cycles_per_epoch = 700000;
-  encl.params        = params;
+  encl.eid              = eid;
+  encl.runtime_paddr    = runtimePhysAddr;
+  encl.user_paddr       = eappPhysAddr;
+  encl.free_paddr       = freePhysAddr;
+  encl.params           = params;
+  encl.cycles_per_epoch = cyclesPerEpoch;
 
   printf("In KeystoneDevice.cpp: KeystoneDevice::finalize");
 
@@ -160,7 +159,7 @@ MockKeystoneDevice::initUTM(size_t size) {
 Error
 MockKeystoneDevice::finalize(
     uintptr_t runtimePhysAddr, uintptr_t eappPhysAddr, uintptr_t freePhysAddr,
-    struct runtime_params_t params) {
+    struct runtime_params_t params, uint64_t cyclesPerEpoch) {
   return Error::Success;
 }
 

@@ -14,8 +14,8 @@ main(int argc, char** argv) {
 
   params.setFreeMemSize(1024 * 1024);
   params.setUntrustedMem(DEFAULT_UNTRUSTED_PTR, 1024 * 1024);
-  params.setPolicy(50000000, 50000000);
-  printf("In host: set policy to instr: %lu\n", params.getPolicyInstr());
+  params.setPolicy(80000000);
+  printf("In host: set policy to instr: %lu\n", params.getPolicyCycles());
 
   enclave.init(argv[1], argv[2], params);
 
