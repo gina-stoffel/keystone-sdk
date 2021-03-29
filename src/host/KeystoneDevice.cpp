@@ -93,7 +93,9 @@ KeystoneDevice::__run(bool resume, uintptr_t* ret) {
     request = KEYSTONE_IOC_RUN_ENCLAVE;
   }
 
+  printf("[sdk KeystoneDevice.cpp] before calling ioctl() with request: %lu, encl eid: %u \n", request, eid);
   if (ioctl(fd, request, &encl)) {
+    printf("[sdk KeystoneDevice.cpp] got ioctl error\n");
     return error;
   }
 

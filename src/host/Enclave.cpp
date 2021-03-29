@@ -422,6 +422,7 @@ Enclave::run(uintptr_t* retval) {
     return Error::Success;
   }
 
+  printf("[sdk Enclave.cpp]Before running pDevice\n");
   Error ret = pDevice->run(retval);
   while (ret == Error::EdgeCallHost || ret == Error::EnclaveInterrupted) {
     /* enclave is stopped in the middle. */
