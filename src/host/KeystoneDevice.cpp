@@ -14,6 +14,10 @@ KeystoneDevice::create(uint64_t minPages) {
   struct keystone_ioctl_create_enclave encl;
   encl.min_pages = minPages;
 
+  // print keystone ioc here
+  printf("[sdk]Creating: %lu \n finalizing: %lu \n Running: %lu \n UTM init: %lu \n destroy: %lu\n", (unsigned long)KEYSTONE_IOC_CREATE_ENCLAVE, (unsigned long)KEYSTONE_IOC_FINALIZE_ENCLAVE, (unsigned long)KEYSTONE_IOC_RUN_ENCLAVE, (unsigned long)KEYSTONE_IOC_UTM_INIT, (unsigned long)KEYSTONE_IOC_DESTROY_ENCLAVE);
+
+
   if (ioctl(fd, KEYSTONE_IOC_CREATE_ENCLAVE, &encl)) {
     perror("ioctl error");
     eid = -1;

@@ -64,7 +64,7 @@ struct keystone_ioctl_create_enclave {
   struct runtime_params_t params;
 
   // policy registration
-  uint64_t cycles_per_epoch;
+  int cycles_per_epoch;
 };
 
 struct keystone_ioctl_run_enclave {

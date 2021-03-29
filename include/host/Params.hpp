@@ -48,7 +48,7 @@ class Params {
     untrusted_size = size;
   }
   void setFreeMemSize(uint64_t size) { freemem_size = size; }
-  void setPolicy(uint64_t cycles) { cycles_per_epoch = cycles; }
+  void setPolicy(int cycles) { cycles_per_epoch = cycles; }
   bool isSimulated() { return simulated; }
   uintptr_t getUntrustedMem() { return untrusted; }
   uintptr_t getUntrustedSize() { return untrusted_size; }
@@ -63,7 +63,7 @@ class Params {
   uint64_t untrusted;
   uint64_t untrusted_size;
   uint64_t freemem_size;
-  uint64_t cycles_per_epoch;
+  int cycles_per_epoch;
 };
 
 }  // namespace Keystone
