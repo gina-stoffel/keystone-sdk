@@ -58,7 +58,7 @@ main(int argc, char** argv) {
   if (argc < 3 || argc > 8) {
     printf(
         "Usage: %s <eapp> <runtime> [--utm-size SIZE(K)] [--freemem-size "
-        "SIZE(K)] [--time] [--load-only] [--utm-ptr 0xPTR] [--retval EXPECTED]\n",
+        "SIZE(K)] [--time] [--load-only] [--utm-ptr 0xPTR] [--retval EXPECTED] [--policy CYCLES_PER_EPOCH]\n",
         argv[0]);
     return 0;
   }
@@ -71,10 +71,14 @@ main(int argc, char** argv) {
   uintptr_t utm_ptr     = (uintptr_t)DEFAULT_UNTRUSTED_PTR;
   bool retval_exist = false;
   unsigned long retval = 0;
+  bool policy_set = false;
+  uint64_t cycles_per_epoch = 0;
+
 
   static struct option long_options[] = {
       {"time", no_argument, &self_timing, 1},
       {"load-only", no_argument, &load_only, 1},
+      {"policy", required_argument, 0, 'c'},
       {"utm-size", required_argument, 0, 'u'},
       {"utm-ptr", required_argument, 0, 'p'},
       {"freemem-size", required_argument, 0, 'f'},
@@ -107,6 +111,9 @@ main(int argc, char** argv) {
         retval_exist = true;
         retval = atoi(optarg);
         break;
+      case 'c':
+        policy_set = true;
+        cycles_per_epoch = atoi(optarg); 
     }
   }
 
@@ -116,6 +123,10 @@ main(int argc, char** argv) {
 
   params.setFreeMemSize(freemem_size);
   params.setUntrustedMem(utm_ptr, untrusted_size);
+
+  if (policy_set) {
+    params.setPolicy(cycles_per_epoch);
+  }
 
   if (self_timing) {
     asm volatile("rdcycle %0" : "=r"(cycles1));
