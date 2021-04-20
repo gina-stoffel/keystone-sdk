@@ -272,8 +272,6 @@ Enclave::init(
     uintptr_t alternatePhysAddr) {
   params = _params;
 
-  printf("In enclave.cpp: Enclave::init");
-
   if (params.isSimulated()) {
     pMemory = new SimulatedEnclaveMemory();
     pDevice = new MockKeystoneDevice();
@@ -422,7 +420,6 @@ Enclave::run(uintptr_t* retval) {
     return Error::Success;
   }
 
-  printf("[sdk Enclave.cpp]Before running pDevice\n");
   Error ret = pDevice->run(retval);
   while (ret == Error::EdgeCallHost || ret == Error::EnclaveInterrupted) {
     /* enclave is stopped in the middle. */

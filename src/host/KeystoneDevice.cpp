@@ -54,7 +54,7 @@ KeystoneDevice::finalize(
   encl.params           = params;
   encl.cycles_per_epoch = cyclesPerEpoch;
 
-  printf("[sdk]finalizing keystone device with these cycles per epoch: %lu\n", cyclesPerEpoch);
+  //printf("[sdk]finalizing keystone device with these cycles per epoch: %lu\n", cyclesPerEpoch);
 
   if (ioctl(fd, KEYSTONE_IOC_FINALIZE_ENCLAVE, &encl)) {
     perror("ioctl error");
