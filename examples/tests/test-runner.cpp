@@ -55,7 +55,17 @@ copy_report(void* buffer) {
 
 int
 main(int argc, char** argv) {
-  if (argc < 3 || argc > 8) {
+  printf("[sdk]The following is argc: %d\n", argc); // argcount? 
+
+  /* note: ./test-runner attestation eyrie-rt --time --policy 400
+  [sdk]The following is argc: 6 -> so argc counts how many separat args there are  */
+
+/* assumption for now:
+ * only the policy flag is used, no other flags
+ * thus we will always have argc as multiple of 3
+ */
+
+  if (argc < 3) {
     printf(
         "Usage: %s <eapp> <runtime> [--utm-size SIZE(K)] [--freemem-size "
         "SIZE(K)] [--time] [--load-only] [--utm-ptr 0xPTR] [--retval EXPECTED] [--policy CYCLES_PER_EPOCH]\n",
@@ -117,7 +127,8 @@ main(int argc, char** argv) {
     }
   }
 
-  Keystone::Enclave enclave;
+  Keystone::Enclave enclave1;
+  Keystone::Enclave enclave2;
   Keystone::Params params;
   unsigned long cycles1, cycles2, cycles3, cycles4;
 
@@ -132,23 +143,33 @@ main(int argc, char** argv) {
     asm volatile("rdcycle %0" : "=r"(cycles1));
   }
 
-  enclave.init(eapp_file, rt_file, params);
+  enclave1.init(eapp_file, rt_file, params);
+  /* todo: verify if the above actually calls eyrie boot but it looks like it sets
+   * the entry point to the runtime, and in the entry point to the runtime the function
+   * eyrie_boot
+   * wait, I might not have permissions to do this call tho
+   */
+  uintptr_t a0 = 0;
+  __asm__ volatile("ecall" : "+r"(a0) : "r"(0), "r"(0), "r"(3001), "r"(0x08424b45): "memory");  
+
+  /* start a second enclave as well */
+  enclave2.init(eapp_file, rt_file, params);
 
   if (self_timing) {
     asm volatile("rdcycle %0" : "=r"(cycles2));
   }
 
-  edge_init(&enclave);
+  edge_init(&enclave1);
 
   if (self_timing) {
     asm volatile("rdcycle %0" : "=r"(cycles3));
   }
 
   uintptr_t encl_ret;
-  if (!load_only) enclave.run(&encl_ret);
+  if (!load_only) enclave1.run(&encl_ret);
 
   if (retval_exist && encl_ret != retval) {
-    printf("[FAIL] enclave returned a wrong value (%d != %d)\r\n", encl_ret, retval);
+    printf("[FAIL] enclave1 returned a wrong value (%d != %d)\r\n", encl_ret, retval);
   }
 
   if (self_timing) {

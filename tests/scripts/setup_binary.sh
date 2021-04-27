@@ -18,7 +18,7 @@ if [ ! -d $EYRIE_DIR ]
 then
   git clone https://github.com/keystone-enclave/keystone-runtime $EYRIE_DIR
 fi
-cd $EYRIE_DIR; git checkout 73ce863; cd ..
+# cd $EYRIE_DIR; git checkout 73ce863; cd ..
 
 ################################################################
 #                       Build Enclave                          #
@@ -28,7 +28,7 @@ OUTPUT_FILES_DIR=$OUTPUT_DIR
 mkdir -p $OUTPUT_FILES_DIR
 
 # build eyrie runtime
-$EYRIE_DIR/build.sh $EYRIE_PLUGINS
+$EYRIE_DIR/build.sh $EYRIE_PLUGINS "debug"
 
 make -C $TEST_DIR
 
