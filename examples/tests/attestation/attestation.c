@@ -10,10 +10,10 @@
 #include "edge_wrapper.h"
 
 void EAPP_ENTRY eapp_entry(){
-  unsigned long cycle_count, cycle_count2;
+  //unsigned long cycle_count, cycle_count2;
 
   edge_init();
-  asm volatile ("rdcycle %0" : "=r" (cycle_count));
+  //asm volatile ("rdcycle %0" : "=r" (cycle_count));
 
   char* data = "nonce";
   char buffer[2048];
@@ -33,8 +33,8 @@ void EAPP_ENTRY eapp_entry(){
 
   ocall_copy_report(buffer, 2048);
 
-  asm volatile ("rdcycle %0" : "=r" (cycle_count2));
-  ocall_print_value((unsigned long)cycle_count2-cycle_count);
+  //asm volatile ("rdcycle %0" : "=r" (cycle_count2));
+  //ocall_print_value((unsigned long)cycle_count2-cycle_count);
 
   EAPP_RETURN(0);
 }

@@ -45,7 +45,7 @@ KeystoneDevice::initUTM(size_t size) {
 Error
 KeystoneDevice::finalize(
     uintptr_t runtimePhysAddr, uintptr_t eappPhysAddr, uintptr_t freePhysAddr,
-    struct runtime_params_t params, uintptr_t cyclesPerEpoch) {
+    struct runtime_params_t params, uintptr_t cyclesPerEpoch, uintptr_t yields_per_epoch) {
   struct keystone_ioctl_create_enclave encl;
   encl.eid              = eid;
   encl.runtime_paddr    = runtimePhysAddr;
@@ -53,6 +53,7 @@ KeystoneDevice::finalize(
   encl.free_paddr       = freePhysAddr;
   encl.params           = params;
   encl.cycles_per_epoch = cyclesPerEpoch;
+  encl.yields_per_epoch = yields_per_epoch;
 
   //printf("[sdk]finalizing keystone device with these cycles per epoch: %lu\n", cyclesPerEpoch);
 
@@ -164,7 +165,7 @@ MockKeystoneDevice::initUTM(size_t size) {
 Error
 MockKeystoneDevice::finalize(
     uintptr_t runtimePhysAddr, uintptr_t eappPhysAddr, uintptr_t freePhysAddr,
-    struct runtime_params_t params, uint64_t cyclesPerEpoch) {
+    struct runtime_params_t params, uint64_t cyclesPerEpoch, uint64_t yieldsPerEpoch) {
   return Error::Success;
 }
 

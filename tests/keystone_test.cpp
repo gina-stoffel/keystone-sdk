@@ -83,7 +83,7 @@ TEST(Enclave_Run, RunTest) {
   params.setFreeMemSize(untrusted_size);
   params.setUntrustedMem(utm_ptr, untrusted_size);
   params.setSimulated(true);
-  params.setPolicy(5000);
+  params.setPolicy(5000, 1);
 
 
   printf("Getting policy instructions set: %lu\n", params.getPolicyCycles());

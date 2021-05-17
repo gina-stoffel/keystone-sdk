@@ -17,6 +17,7 @@
 #include <pthread.h>
 
 const char* longstr = "hellohellohellohellohellohellohellohellohellohello";
+pthread_barrier_t barrier;
 
 unsigned long
 print_buffer(char* str) {
@@ -59,13 +60,18 @@ copy_report(void* buffer) {
   }
 }
 
+// enclaves[e].run(&encl_ret[e])
 void *encl_runner(void* encl) {
-  printf("some te\n");
+  printf("thread joined\n");
   Keystone::Enclave* e = (Keystone::Enclave*)encl;
+
+  pthread_barrier_wait(&barrier);
+
+  //printf("running after barrier\n");
 
   uintptr_t temp_ret;
   e->run(&temp_ret);
-  printf("The enclave returned: %u\n", temp_ret);
+  //printf("The enclave returned: %u\n", temp_ret);
 
   return NULL;
 }
@@ -148,7 +154,10 @@ main(int argc, char** argv) {
         break;
       case 'c':
         policy_set = true;
-        cycles_per_epoch = atoi(optarg); 
+        cycles_per_epoch = atoi(optarg);
+        for(int i = 0; i < sizeof(cycles_per_epoch); i++) {
+          printf("\n cycles per epoch in skript: %u \n", cycles_per_epoch);
+        }
     }
   }
 
@@ -160,7 +169,7 @@ main(int argc, char** argv) {
    params.setFreeMemSize(freemem_size);
    params.setUntrustedMem(utm_ptr, untrusted_size);
    if (policy_set) {
-     params.setPolicy(cycles_per_epoch);
+     params.setPolicy(cycles_per_epoch, 1);
    }
 
    if (self_timing) {
@@ -187,13 +196,19 @@ main(int argc, char** argv) {
   if (!load_only) {
    //uintptr_t encl_ret[no_of_enlcaves];
     
+    pthread_t threads[no_of_enlcaves];
+    pthread_barrier_init(&barrier, NULL, no_of_enlcaves);
+
     for(int e = 0; e < no_of_enlcaves; e++) {
-      pthread_t thread_id;
-      pthread_create(&thread_id, NULL, encl_runner, (void*)(&enclaves[e]) );
-      pthread_join(thread_id, NULL); 
-      // enclaves[e].run(&encl_ret[e])
+      pthread_create(&threads[e], NULL, encl_runner, (void*)(&enclaves[e]) );
     }
     
+    for(int e = 0; e < no_of_enlcaves; e++) {
+      pthread_join(threads[e], NULL);
+    }
+    // try with mutex https://lloydrochester.com/post/c/pthread-barrier-example/
+
+    pthread_barrier_destroy(&barrier);
   }
 
   if (self_timing) {
