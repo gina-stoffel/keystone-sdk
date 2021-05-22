@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/keystone/sdk/build/examples/tests/add_long.S
+
+/keystone/sdk/examples/tests/long-nop/long-nop.S
+nop.h
+/keystone/sdk/examples/tests/long-nop/nop.h
+
+/keystone/sdk/examples/tests/long-nop/nop.h
+

@@ -1,0 +1,13 @@
+# Target labels
+ eyrie-bench-eyrie
+# Source files and their labels
+/keystone/sdk/build/examples/rv8-bench/CMakeFiles/eyrie-bench-eyrie
+/keystone/sdk/build/examples/rv8-bench/CMakeFiles/eyrie-bench-eyrie.rule
+/keystone/sdk/build/examples/rv8-bench/CMakeFiles/eyrie-bench-eyrie-complete.rule
+/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-install.rule
+/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-mkdir.rule
+/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-download.rule
+/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-update.rule
+/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-patch.rule
+/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-configure.rule
+/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-build.rule

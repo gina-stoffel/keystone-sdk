@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/app/eapp_utils.h
+
+../include/app/sealing.h
+
+../include/app/string.h
+stddef.h
+-
+stdint.h
+-
+
+../include/app/syscall.h
+stddef.h
+-
+stdint.h
+-
+sealing.h
+../include/app/sealing.h
+
+/keystone/sdk/examples/tests/data-sealing/data-sealing.c
+app/eapp_utils.h
+/keystone/sdk/examples/tests/data-sealing/app/eapp_utils.h
+app/string.h
+/keystone/sdk/examples/tests/data-sealing/app/string.h
+app/syscall.h
+/keystone/sdk/examples/tests/data-sealing/app/syscall.h
+data-sealing.h
+/keystone/sdk/examples/tests/data-sealing/data-sealing.h
+
+/keystone/sdk/examples/tests/data-sealing/data-sealing.h
+app/sealing.h
+/keystone/sdk/examples/tests/data-sealing/app/sealing.h
+

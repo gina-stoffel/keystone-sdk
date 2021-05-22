@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/app/eapp_utils.h
+
+/keystone/sdk/examples/tests/fibonacci/fibonacci.c
+app/eapp_utils.h
+/keystone/sdk/examples/tests/fibonacci/app/eapp_utils.h
+

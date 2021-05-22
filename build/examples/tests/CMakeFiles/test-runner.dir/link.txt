@@ -1,0 +1,1 @@
+/keystone/riscv64/bin/riscv64-unknown-linux-gnu-g++  -g   CMakeFiles/test-runner.dir/test-runner.cpp.o CMakeFiles/test-runner.dir/edge_wrapper.cpp.o  -o test-runner ../../../build64/lib/libkeystone-host.a ../../../build64/lib/libkeystone-edge.a ../../../build64/lib/libkeystone-verifier.a 
