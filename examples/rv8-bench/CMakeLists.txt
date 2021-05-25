@@ -34,7 +34,7 @@ add_custom_command(OUTPUT aes
 # bigint
 add_custom_command(OUTPUT bigint
   COMMAND
-  riscv64-unknown-linux-gnu-g++ -static -o ${CMAKE_CURRENT_BINARY_DIR}/bigint
+  riscv64-unknown-linux-gnu-g++ -static -fPIE -g -o ${CMAKE_CURRENT_BINARY_DIR}/bigint
 /keystone/sdk/examples/rv8-bench/eapp/bigint.cc)
 
 # dhrystone
@@ -85,7 +85,17 @@ add_eyrie_runtime(bench-eyrie
 add_keystone_package(bench-package
   ${package_name}
   ${package_script}
-  ${eyrie_files_to_copy} sha512 aes bigint dhrystone miniz norx primes qsort ${host_bin})
+  ${eyrie_files_to_copy} 
+  sha512 
+  aes 
+  bigint 
+  dhrystone 
+  miniz 
+  norx 
+  primes 
+  qsort 
+  ${host_bin}
+  /keystone/sdk/examples/rv8-bench/run_rv8-bench.sh)
 
 add_dependencies(bench-package bench-eyrie)
 
