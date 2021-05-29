@@ -116,6 +116,7 @@ main(int argc, char** argv) {
 
   params.setFreeMemSize(freemem_size);
   params.setUntrustedMem(utm_ptr, untrusted_size);
+  params.setPolicy(5000, 1);
 
   if (self_timing) {
     asm volatile("rdcycle %0" : "=r"(cycles1));
