@@ -5,12 +5,19 @@
 #include <getopt.h>
 #include <cstdio>
 #include <iostream>
+#include <thread>
+#include <vector>
+#include <stdio.h>
 #include "edge_wrapper.h"
 #include "host/keystone.h"
 #include "verifier/report.h"
 #include "verifier/test_dev_key.h"
+#include <stdlib.h>
+#include <unistd.h>  //Header file for sleep(). man 3 sleep for details.
+#include <pthread.h>
 
 const char* longstr = "hellohellohellohellohellohellohellohellohellohello";
+pthread_barrier_t barrier;
 
 unsigned long
 print_buffer(char* str) {
@@ -53,15 +60,44 @@ copy_report(void* buffer) {
   }
 }
 
+// enclaves[e].run(&encl_ret[e])
+void *encl_runner(void* encl) {
+  printf("thread joined\n");
+  Keystone::Enclave* e = (Keystone::Enclave*)encl;
+
+  pthread_barrier_wait(&barrier);
+
+  //printf("running after barrier\n");
+
+  uintptr_t temp_ret;
+  e->run(&temp_ret);
+  //printf("The enclave returned: %u\n", temp_ret);
+
+  return NULL;
+}
+
 int
 main(int argc, char** argv) {
-  if (argc < 3 || argc > 8) {
+
+  /* note: ./test-runner attestation eyrie-rt --time --policy 400
+  [sdk]The following is argc: 6 -> so argc counts how many separat args there are  */
+
+/* assumption for now:
+ * the arguments should be passed as follows
+ * ./test-runner 2 eapp1 eapp2 rd1 rt2 --time --policy 500  // the flags will be applied to all the enclaves
+ */
+
+
+  if (argc < 4) {
     printf(
         "Usage: %s <eapp> <runtime> [--utm-size SIZE(K)] [--freemem-size "
-        "SIZE(K)] [--time] [--load-only] [--utm-ptr 0xPTR] [--retval EXPECTED]\n",
+        "SIZE(K)] [--time] [--load-only] [--utm-ptr 0xPTR] [--retval EXPECTED] [--policy CYCLES_PER_EPOCH]\n",
         argv[0]);
     return 0;
   }
+
+  int no_of_enlcaves = atoi(argv[1]);
+  printf("Number of enclaves to start is %d\n", no_of_enlcaves);
 
   int self_timing = 0;
   int load_only   = 0;
@@ -71,26 +107,35 @@ main(int argc, char** argv) {
   uintptr_t utm_ptr     = (uintptr_t)DEFAULT_UNTRUSTED_PTR;
   bool retval_exist = false;
   unsigned long retval = 0;
+  bool policy_set = false;
+  uint64_t cycles_per_epoch = 0;
 
   static struct option long_options[] = {
       {"time", no_argument, &self_timing, 1},
       {"load-only", no_argument, &load_only, 1},
+      {"policy", required_argument, 0, 'c'},
       {"utm-size", required_argument, 0, 'u'},
       {"utm-ptr", required_argument, 0, 'p'},
       {"freemem-size", required_argument, 0, 'f'},
       {"retval", required_argument, 0, 'r'},
       {0, 0, 0, 0}};
 
-  char* eapp_file = argv[1];
-  char* rt_file   = argv[2];
+  char* eapp_files[no_of_enlcaves];
+  char* rt_files[no_of_enlcaves];
+
+  for(int n = 0; n < no_of_enlcaves; n++) {
+    eapp_files[n] = argv[n+2];
+    rt_files[n] = argv[n+2+no_of_enlcaves];
+  }
 
   int c;
-  int opt_index = 3;
+  int opt_index = 2+2*no_of_enlcaves;
+
   while (1) {
-    c = getopt_long(argc, argv, "u:p:f:", long_options, &opt_index);
+    c = getopt_long(argc, argv, "c:u:p:f:", long_options, &opt_index);
 
     if (c == -1) break;
-
+    
     switch (c) {
       case 0:
         break;
@@ -107,37 +152,63 @@ main(int argc, char** argv) {
         retval_exist = true;
         retval = atoi(optarg);
         break;
+      case 'c':
+        policy_set = true;
+        cycles_per_epoch = atoi(optarg);
+        for(int i = 0; i < sizeof(cycles_per_epoch); i++) {
+          printf("\n cycles per epoch in skript: %u \n", cycles_per_epoch);
+        }
     }
   }
 
-  Keystone::Enclave enclave;
-  Keystone::Params params;
-  unsigned long cycles1, cycles2, cycles3, cycles4;
+   Keystone::Enclave enclaves[no_of_enlcaves];
+   Keystone::Params params;
 
-  params.setFreeMemSize(freemem_size);
-  params.setUntrustedMem(utm_ptr, untrusted_size);
+   unsigned long cycles1, cycles2, cycles3, cycles4;
 
-  if (self_timing) {
-    asm volatile("rdcycle %0" : "=r"(cycles1));
+   params.setFreeMemSize(freemem_size);
+   params.setUntrustedMem(utm_ptr, untrusted_size);
+   if (policy_set) {
+     params.setPolicy(cycles_per_epoch, 1);
+   }
+
+   if (self_timing) {
+     asm volatile("rdcycle %0" : "=r"(cycles1));
+   }
+
+    for(int e = 0; e < no_of_enlcaves; e++) {
+      enclaves[e].init(eapp_files[e], rt_files[e], params);
+    }
+
+   if (self_timing) {
+     asm volatile("rdcycle %0" : "=r"(cycles2));
+   }
+
+  for(int e = 0; e < no_of_enlcaves; e++) {
+    edge_init(&enclaves[e]);
   }
 
-  enclave.init(eapp_file, rt_file, params);
+   if (self_timing) {
+     asm volatile("rdcycle %0" : "=r"(cycles3));
+   }
 
-  if (self_timing) {
-    asm volatile("rdcycle %0" : "=r"(cycles2));
-  }
 
-  edge_init(&enclave);
+  if (!load_only) {
+   //uintptr_t encl_ret[no_of_enlcaves];
+    
+    pthread_t threads[no_of_enlcaves];
+    pthread_barrier_init(&barrier, NULL, no_of_enlcaves);
 
-  if (self_timing) {
-    asm volatile("rdcycle %0" : "=r"(cycles3));
-  }
+    for(int e = 0; e < no_of_enlcaves; e++) {
+      pthread_create(&threads[e], NULL, encl_runner, (void*)(&enclaves[e]) );
+    }
+    
+    for(int e = 0; e < no_of_enlcaves; e++) {
+      pthread_join(threads[e], NULL);
+    }
+    // try with mutex https://lloydrochester.com/post/c/pthread-barrier-example/
 
-  uintptr_t encl_ret;
-  if (!load_only) enclave.run(&encl_ret);
-
-  if (retval_exist && encl_ret != retval) {
-    printf("[FAIL] enclave returned a wrong value (%d != %d)\r\n", encl_ret, retval);
+    pthread_barrier_destroy(&barrier);
   }
 
   if (self_timing) {

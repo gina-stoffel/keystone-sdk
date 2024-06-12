@@ -14,6 +14,10 @@ KeystoneDevice::create(uint64_t minPages) {
   struct keystone_ioctl_create_enclave encl;
   encl.min_pages = minPages;
 
+  // print keystone ioc here
+  //printf("[sdk]Creating: %lu \n finalizing: %lu \n Running: %lu \n UTM init: %lu \n destroy: %lu\n", (unsigned long)KEYSTONE_IOC_CREATE_ENCLAVE, (unsigned long)KEYSTONE_IOC_FINALIZE_ENCLAVE, (unsigned long)KEYSTONE_IOC_RUN_ENCLAVE, (unsigned long)KEYSTONE_IOC_UTM_INIT, (unsigned long)KEYSTONE_IOC_DESTROY_ENCLAVE);
+
+
   if (ioctl(fd, KEYSTONE_IOC_CREATE_ENCLAVE, &encl)) {
     perror("ioctl error");
     eid = -1;
@@ -41,13 +45,17 @@ KeystoneDevice::initUTM(size_t size) {
 Error
 KeystoneDevice::finalize(
     uintptr_t runtimePhysAddr, uintptr_t eappPhysAddr, uintptr_t freePhysAddr,
-    struct runtime_params_t params) {
+    struct runtime_params_t params, uintptr_t cyclesPerEpoch, uintptr_t yields_per_epoch) {
   struct keystone_ioctl_create_enclave encl;
-  encl.eid           = eid;
-  encl.runtime_paddr = runtimePhysAddr;
-  encl.user_paddr    = eappPhysAddr;
-  encl.free_paddr    = freePhysAddr;
-  encl.params        = params;
+  encl.eid              = eid;
+  encl.runtime_paddr    = runtimePhysAddr;
+  encl.user_paddr       = eappPhysAddr;
+  encl.free_paddr       = freePhysAddr;
+  encl.params           = params;
+  encl.cycles_per_epoch = cyclesPerEpoch;
+  encl.yields_per_epoch = yields_per_epoch;
+
+  //printf("[sdk]finalizing keystone device with these cycles per epoch: %lu\n", cyclesPerEpoch);
 
   if (ioctl(fd, KEYSTONE_IOC_FINALIZE_ENCLAVE, &encl)) {
     perror("ioctl error");
@@ -90,6 +98,7 @@ KeystoneDevice::__run(bool resume, uintptr_t* ret) {
     request = KEYSTONE_IOC_RUN_ENCLAVE;
   }
 
+  //printf("[sdk] before calling ioctl() with request: %lu, encl eid: %u \n", request, eid);
   if (ioctl(fd, request, &encl)) {
     return error;
   }
@@ -156,7 +165,7 @@ MockKeystoneDevice::initUTM(size_t size) {
 Error
 MockKeystoneDevice::finalize(
     uintptr_t runtimePhysAddr, uintptr_t eappPhysAddr, uintptr_t freePhysAddr,
-    struct runtime_params_t params) {
+    struct runtime_params_t params, uint64_t cyclesPerEpoch, uint64_t yieldsPerEpoch) {
   return Error::Success;
 }
 

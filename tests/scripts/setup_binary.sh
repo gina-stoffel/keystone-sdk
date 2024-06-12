@@ -11,6 +11,7 @@ OUTPUT_DIR=$(pwd)
 TEST_DIR=$CMAKE_SOURCE_DIR/test_binary/tests
 EYRIE_DIR=$CMAKE_BINARY_DIR/eyrie
 EYRIE_PLUGINS="freemem"
+#EYRIE_PLUGINSD="debug"
 
 # Download Eyrie Runtime
 if [ ! -d $EYRIE_DIR ]
