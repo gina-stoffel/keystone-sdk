@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/keystone/sdk/build/examples/rv8-bench/CMakeFiles/eyrie-bench-eyrie"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/rv8-bench/CMakeFiles/eyrie-bench-eyrie.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/rv8-bench/CMakeFiles/eyrie-bench-eyrie-complete.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-install.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-mkdir.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-download.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-update.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-patch.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-configure.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/rv8-bench/runtime/src/eyrie-bench-eyrie-stamp/eyrie-bench-eyrie-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"eyrie-bench-eyrie"
+		],
+		"name" : "eyrie-bench-eyrie"
+	}
+}

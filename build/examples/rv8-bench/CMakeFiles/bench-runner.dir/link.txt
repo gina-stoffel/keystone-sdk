@@ -1,0 +1,1 @@
+/keystone/riscv64/bin/riscv64-unknown-linux-gnu-g++  -g   CMakeFiles/bench-runner.dir/host/host.cpp.o  -o bench-runner ../../../build64/lib/libkeystone-host.a ../../../build64/lib/libkeystone-edge.a 

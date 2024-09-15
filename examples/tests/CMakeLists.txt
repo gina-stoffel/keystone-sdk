@@ -70,6 +70,11 @@ target_link_libraries(untrusted ${KEYSTONE_LIB_EAPP} ${KEYSTONE_LIB_EDGE})
 add_executable(data-sealing data-sealing/data-sealing.c)
 target_link_libraries(data-sealing ${KEYSTONE_LIB_EAPP} ${KEYSTONE_LIB_EDGE})
 
+add_custom_command(OUTPUT sha512
+  COMMAND
+  riscv64-unknown-linux-musl-gcc -static -o /keystone/build/overlay/root/sha512
+/keystone/sdk/examples/test/sha512/sha512.c)
+
 ###############################################
 # a script for running all test enclaves
 set(test_script_tmp ${CMAKE_CURRENT_BINARY_DIR}/tmp/run-test.sh)

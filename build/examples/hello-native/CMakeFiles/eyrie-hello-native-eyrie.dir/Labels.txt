@@ -1,0 +1,13 @@
+# Target labels
+ eyrie-hello-native-eyrie
+# Source files and their labels
+/keystone/sdk/build/examples/hello-native/CMakeFiles/eyrie-hello-native-eyrie
+/keystone/sdk/build/examples/hello-native/CMakeFiles/eyrie-hello-native-eyrie.rule
+/keystone/sdk/build/examples/hello-native/CMakeFiles/eyrie-hello-native-eyrie-complete.rule
+/keystone/sdk/build/examples/hello-native/runtime/src/eyrie-hello-native-eyrie-stamp/eyrie-hello-native-eyrie-install.rule
+/keystone/sdk/build/examples/hello-native/runtime/src/eyrie-hello-native-eyrie-stamp/eyrie-hello-native-eyrie-mkdir.rule
+/keystone/sdk/build/examples/hello-native/runtime/src/eyrie-hello-native-eyrie-stamp/eyrie-hello-native-eyrie-download.rule
+/keystone/sdk/build/examples/hello-native/runtime/src/eyrie-hello-native-eyrie-stamp/eyrie-hello-native-eyrie-update.rule
+/keystone/sdk/build/examples/hello-native/runtime/src/eyrie-hello-native-eyrie-stamp/eyrie-hello-native-eyrie-patch.rule
+/keystone/sdk/build/examples/hello-native/runtime/src/eyrie-hello-native-eyrie-stamp/eyrie-hello-native-eyrie-configure.rule
+/keystone/sdk/build/examples/hello-native/runtime/src/eyrie-hello-native-eyrie-stamp/eyrie-hello-native-eyrie-build.rule

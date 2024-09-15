@@ -1,0 +1,2 @@
+/keystone/riscv64/bin/riscv64-unknown-linux-gnu-ar qc libkeystone-edge.a  CMakeFiles/keystone-edge.dir/edge_call.c.o CMakeFiles/keystone-edge.dir/edge_dispatch.c.o CMakeFiles/keystone-edge.dir/edge_syscall.c.o
+/usr/bin/ranlib libkeystone-edge.a

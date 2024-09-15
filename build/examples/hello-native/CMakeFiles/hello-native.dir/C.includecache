@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/keystone/sdk/examples/hello-native/eapp/eapp_native.c
+eapp_utils.h
+/keystone/sdk/examples/hello-native/eapp/eapp_utils.h
+string.h
+/keystone/sdk/examples/hello-native/eapp/string.h
+edge_call.h
+/keystone/sdk/examples/hello-native/eapp/edge_call.h
+syscall.h
+-
+

@@ -1,0 +1,2 @@
+/keystone/riscv64/bin/riscv64-unknown-linux-gnu-ar qc libkeystone-eapp.a  CMakeFiles/keystone-eapp.dir/encret.s.o CMakeFiles/keystone-eapp.dir/string.c.o CMakeFiles/keystone-eapp.dir/syscall.c.o CMakeFiles/keystone-eapp.dir/tiny-malloc.c.o
+/usr/bin/ranlib libkeystone-eapp.a

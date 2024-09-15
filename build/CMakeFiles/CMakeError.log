@@ -1,0 +1,56 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /keystone/sdk/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_bfd1b/fast"
+/usr/bin/make -f CMakeFiles/cmTC_bfd1b.dir/build.make CMakeFiles/cmTC_bfd1b.dir/build
+make[1]: Entering directory '/keystone/sdk/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_bfd1b.dir/CheckSymbolExists.c.o
+/keystone/riscv64/bin/riscv64-unknown-linux-gnu-gcc   -Wall    -o CMakeFiles/cmTC_bfd1b.dir/CheckSymbolExists.c.o   -c /keystone/sdk/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_bfd1b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bfd1b.dir/link.txt --verbose=1
+/keystone/riscv64/bin/riscv64-unknown-linux-gnu-gcc -Wall     CMakeFiles/cmTC_bfd1b.dir/CheckSymbolExists.c.o  -o cmTC_bfd1b 
+/keystone/riscv64/bin/../lib/gcc/riscv64-unknown-linux-gnu/10.2.0/../../../../riscv64-unknown-linux-gnu/bin/ld: CMakeFiles/cmTC_bfd1b.dir/CheckSymbolExists.c.o: in function `main':
+CheckSymbolExists.c:(.text+0x18): undefined reference to `pthread_create'
+/keystone/riscv64/bin/../lib/gcc/riscv64-unknown-linux-gnu/10.2.0/../../../../riscv64-unknown-linux-gnu/bin/ld: CheckSymbolExists.c:(.text+0x1c): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_bfd1b.dir/build.make:97: recipe for target 'cmTC_bfd1b' failed
+make[1]: *** [cmTC_bfd1b] Error 1
+make[1]: Leaving directory '/keystone/sdk/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_bfd1b/fast' failed
+make: *** [cmTC_bfd1b/fast] Error 2
+
+File /keystone/sdk/build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /keystone/sdk/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_c4883/fast"
+/usr/bin/make -f CMakeFiles/cmTC_c4883.dir/build.make CMakeFiles/cmTC_c4883.dir/build
+make[1]: Entering directory '/keystone/sdk/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c4883.dir/CheckFunctionExists.c.o
+/keystone/riscv64/bin/riscv64-unknown-linux-gnu-gcc   -Wall -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_c4883.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_c4883
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c4883.dir/link.txt --verbose=1
+/keystone/riscv64/bin/riscv64-unknown-linux-gnu-gcc -Wall -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_c4883.dir/CheckFunctionExists.c.o  -o cmTC_c4883 -lpthreads 
+/keystone/riscv64/bin/../lib/gcc/riscv64-unknown-linux-gnu/10.2.0/../../../../riscv64-unknown-linux-gnu/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_c4883.dir/build.make:97: recipe for target 'cmTC_c4883' failed
+make[1]: *** [cmTC_c4883] Error 1
+make[1]: Leaving directory '/keystone/sdk/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_c4883/fast' failed
+make: *** [cmTC_c4883/fast] Error 2
+
+

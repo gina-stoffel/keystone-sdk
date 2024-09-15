@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/keystone/sdk/build/examples/hello/CMakeFiles/eyrie-hello-eyrie"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/hello/CMakeFiles/eyrie-hello-eyrie.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/hello/CMakeFiles/eyrie-hello-eyrie-complete.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/hello/runtime/src/eyrie-hello-eyrie-stamp/eyrie-hello-eyrie-install.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/hello/runtime/src/eyrie-hello-eyrie-stamp/eyrie-hello-eyrie-mkdir.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/hello/runtime/src/eyrie-hello-eyrie-stamp/eyrie-hello-eyrie-download.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/hello/runtime/src/eyrie-hello-eyrie-stamp/eyrie-hello-eyrie-update.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/hello/runtime/src/eyrie-hello-eyrie-stamp/eyrie-hello-eyrie-patch.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/hello/runtime/src/eyrie-hello-eyrie-stamp/eyrie-hello-eyrie-configure.rule"
+		},
+		{
+			"file" : "/keystone/sdk/build/examples/hello/runtime/src/eyrie-hello-eyrie-stamp/eyrie-hello-eyrie-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"eyrie-hello-eyrie"
+		],
+		"name" : "eyrie-hello-eyrie"
+	}
+}

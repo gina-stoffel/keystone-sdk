@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/app/eapp_utils.h
+
+/keystone/sdk/examples/tests/malloc/malloc.c
+app/eapp_utils.h
+/keystone/sdk/examples/tests/malloc/app/eapp_utils.h
+malloc.h
+/keystone/sdk/examples/tests/malloc/malloc.h
+
